@@ -22,6 +22,18 @@ const todoCTRL = {
       console.error(err);
     }
   },
+  removeTodo: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const deleted = await pool.query(
+        "DELETE FROM todo WHERE id = ($1) RETURNING *",
+        [id]
+      );
+      res.sendStatus(200);
+    } catch (err) {
+      console.error(err);
+    }
+  },
 };
 
 export default todoCTRL;
